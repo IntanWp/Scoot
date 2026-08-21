@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: mrbs-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mrbs
+      POSTGRES_PASSWORD: mrbs
+      POSTGRES_DB: mrbs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: mrbs-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: mrbs
+      RABBITMQ_DEFAULT_PASS: mrbs
+    ports:
+      - "5672:5672"   # service connects here
+      - "15672:15672" # Management UI: http://localhost:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
