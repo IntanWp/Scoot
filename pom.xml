@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+		Aggregator POM. This groups the three services so that IntelliJ imports
+		them all at once and `mvnw clean package` at the repo root builds
+		everything in one command.
+
+		This is NOT a parent for dependency purposes. Each service keeps
+		spring-boot-starter-parent as its own <parent>, so their dependency
+		versions are unchanged. Aggregation and inheritance are separate
+		things in Maven.
+	-->
+
+	<groupId>com.example</groupId>
+	<artifactId>scoot</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>scoot</name>
+	<description>Meeting room booking system: event-driven microservices with preemptive priority scheduling</description>
+
+	<modules>
+		<module>user-service</module>
+		<module>booking-service</module>
+		<module>notification-service</module>
+	</modules>
+
+</project>

@@ -1,31 +1,41 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:16
-    container_name: mrbs-postgres
+    container_name: scoot-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: mrbs
-      POSTGRES_PASSWORD: mrbs
-      POSTGRES_DB: mrbs
+      POSTGRES_USER: scoot
+      POSTGRES_PASSWORD: scoot
+      POSTGRES_DB: scoot
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      # Runs only on a fresh volume. See docker/init-db/01-create-databases.sql
+      - ./docker/init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scoot -d scoot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: mrbs-rabbitmq
+    container_name: scoot-rabbitmq
     restart: unless-stopped
     environment:
-      RABBITMQ_DEFAULT_USER: mrbs
-      RABBITMQ_DEFAULT_PASS: mrbs
+      RABBITMQ_DEFAULT_USER: scoot
+      RABBITMQ_DEFAULT_PASS: scoot
     ports:
-      - "5672:5672"   # service connects here
-      - "15672:15672" # Management UI: http://localhost:15672
+      - "5672:5672"   # AMQP - services connect here
+      - "15672:15672" # Management UI - http://localhost:15672 (scoot/scoot)
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
 
 volumes:
   postgres_data:
