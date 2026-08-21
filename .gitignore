@@ -1,0 +1,22 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Build output
+target/
+build/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Staging area for files Claude cannot delete directly
+_to_delete/
