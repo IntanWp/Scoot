@@ -1,4 +1,4 @@
-package com.example.user_service.model.dto.exception;
+package com.example.user_service.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

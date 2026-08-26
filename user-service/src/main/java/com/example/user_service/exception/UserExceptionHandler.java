@@ -1,11 +1,11 @@
-package com.example.user_service.model.dto.exception;
+package com.example.user_service.exception;
 
 import com.example.user_service.exception.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.example.user_service.model.dto.exception.ErrorResponse;
+import com.example.user_service.exception.ErrorResponse;
 
 
 @RestControllerAdvice
@@ -14,7 +14,7 @@ public class UserExceptionHandler {
     //translates the exception into a response (ErrorResponse)
     @ExceptionHandler(UserException.class)
     ResponseEntity<?> handleException(UserException exception) {
-        com.example.user_service.model.dto.exception.ErrorCodeEnum errorDetail = exception.getErrorCode();
+        ErrorCodeEnum errorDetail = exception.getErrorCode();
 
         return ResponseEntity
                 .status(errorDetail.getCode())
