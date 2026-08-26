@@ -1,6 +1,7 @@
-package com.example.user_service.model.dto.exception;
+package com.example.user_service.exception;
 
 import lombok.Getter;
+import com.example.user_service.model.dto.exception.ErrorCodeEnum;
 
 @Getter
 public class UserException extends RuntimeException{
