@@ -1,7 +1,9 @@
 package com.example.user_service.model.dto.request;
 
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
+@Data
 public class CreateUserRequest {
     @NotBlank(message = "name is null/empty")
     private String name;
