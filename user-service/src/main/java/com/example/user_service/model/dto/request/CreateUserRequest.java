@@ -1,4 +1,4 @@
-package com.example.user_service.model.dto;
+package com.example.user_service.model.dto.request;
 
 import jakarta.validation.constraints.*;
 
