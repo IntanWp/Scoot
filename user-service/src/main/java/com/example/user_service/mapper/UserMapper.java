@@ -22,4 +22,7 @@ public interface UserMapper {
 
     @Update("UPDATE users SET tier = #{tier} WHERE user_id = #{userId}")
     int updateTier(@Param("userId") UUID userId, @Param("tier") Integer tier);
+
+    @Select("SELECT * FROM users WHERE email = #{email}")
+    User emailExists(String email);
 }
