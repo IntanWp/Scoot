@@ -18,5 +18,6 @@ public class CreateUserRequest {
 
     @Min(1)
     @Max(3)
+    @NotNull
     private Integer tier;
 }

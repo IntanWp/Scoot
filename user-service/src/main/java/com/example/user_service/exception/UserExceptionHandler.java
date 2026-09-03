@@ -22,7 +22,7 @@ public class UserExceptionHandler {
         ErrorCodeEnum errorDetail = exception.getErrorCode();
 
         return ResponseEntity
-                .status(errorDetail.getCode())
+                .status(errorDetail.getStatus())
                 .body(new ErrorResponse(errorDetail.name(), errorDetail.getMessage()));
     }
 
