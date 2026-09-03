@@ -1,4 +1,4 @@
-package com.model;
+package com.example.user_service.model;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

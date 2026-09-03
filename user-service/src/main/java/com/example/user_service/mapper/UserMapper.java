@@ -1,6 +1,6 @@
-package com.mapper;
+package com.example.user_service.mapper;
 
-import com.model.User;
+import com.example.user_service.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
