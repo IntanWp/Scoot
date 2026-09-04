@@ -59,5 +59,7 @@ public class UserService {
             throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
         }
 
+        userMapper.updateTier(uuid, newTier);
+
     }
 }
