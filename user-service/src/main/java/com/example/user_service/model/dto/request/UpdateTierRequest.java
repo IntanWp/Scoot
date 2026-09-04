@@ -10,9 +10,6 @@ import java.util.UUID;
 
 @Data
 public class UpdateTierRequest {
-    @NotBlank(message = "userId is null/empty")
-    private UUID userId;
-
     @Min(1)
     @Max(3)
     @NotNull
