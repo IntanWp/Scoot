@@ -7,11 +7,10 @@ import com.example.user_service.model.User;
 import com.example.user_service.model.dto.request.CreateUserRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -21,45 +20,42 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public void getAllUsers(){
-        userMapper.findAll();
+    public List<User> getAllUsers(){
+        return userMapper.findAll();
     }
 
-    public void createUser(CreateUserRequest request){
+    public User createUser(CreateUserRequest request){
         User newUser = User.builder()
-                .email(request.getEmail())
+                .email(request.getEmail().trim().toLowerCase())
                 .tier(request.getTier())
                 .name(request.getName())
-                .createdAt(OffsetDateTime.now())
+                .userId(UUID.randomUUID())
                 .build();
 
-        if (userMapper.emailExists(request.getEmail()) != null) {
+        try {
+            userMapper.insert(newUser);
+        } catch (DuplicateKeyException e) {
             throw new UserException(ErrorCodeEnum.EMAIL_ALREADY_EXISTS);
         }
+        return userMapper.findById(newUser.getUserId());
 
-
-        userMapper.insert(newUser);
     }
 
-    public User findById(String id){
-        UUID uuid = UUID.fromString(id);
+    public User findById(UUID id){
 
-        User user = userMapper.findById(uuid);
-        if(user == null) {
-            throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
-        }
-
+        User user = userMapper.findById(id);
+        if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
         return user;
+
     }
 
-    public void updateTier(String id, Integer newTier){
-        UUID uuid = UUID.fromString(id);
-        User user = userMapper.findById(uuid);
-        if(user == null) {
-            throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
-        }
+    public User updateTier(UUID id, Integer newTier){
 
-        userMapper.updateTier(uuid, newTier);
+        User user = userMapper.findById(id);
+        if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
 
+        userMapper.updateTier(id, newTier);
+
+        return userMapper.findById(id);
     }
 }
