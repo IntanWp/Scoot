@@ -7,7 +7,8 @@ CREATE TABLE users (
                        -- Higher value = higher priority. Mirrored into Booking Service's
                        -- user_tier_cache (also INT) via the UserTierChanged event.
                        tier        INT NOT NULL,
-                        password   VARCHAR(255) NOT NULL,
+                        password_hash   VARCHAR(255) NOT NULL,
+                        role       VARCHAR(34) NOT NULL DEFAULT "member",
                        created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
