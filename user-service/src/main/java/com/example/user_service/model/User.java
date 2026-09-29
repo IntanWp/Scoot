@@ -7,14 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Data //getter & setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class User {
-    private UUID userId;
+    private String userId;
 
     private String name;
 
@@ -23,6 +22,8 @@ public class User {
     private Integer tier;
 
     private OffsetDateTime createdAt;
+
+    private String password;
 
 
 }

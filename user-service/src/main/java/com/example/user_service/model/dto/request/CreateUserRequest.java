@@ -22,4 +22,9 @@ public class CreateUserRequest {
     @Max(3)
     @NotNull
     private Integer tier;
+
+    @NotBlank
+    @Size(max = 255)
+//    @Pattern(regexp = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
+    private String password;
 }

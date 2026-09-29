@@ -29,7 +29,8 @@ public class UserService {
                 .email(request.getEmail().trim().toLowerCase())
                 .tier(request.getTier())
                 .name(request.getName())
-                .userId(UUID.randomUUID())
+                .userId(UUID.randomUUID().toString())
+                .password(request.getPassword())
                 .build();
 
         try {
@@ -41,7 +42,7 @@ public class UserService {
 
     }
 
-    public User findById(UUID id){
+    public User findById(String id){
 
         User user = userMapper.findById(id);
         if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
@@ -49,7 +50,7 @@ public class UserService {
 
     }
 
-    public User updateTier(UUID id, Integer newTier){
+    public User updateTier(String id, Integer newTier){
 
         User user = userMapper.findById(id);
         if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);

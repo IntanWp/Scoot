@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -32,12 +31,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable UUID userId){
+    public User getUserById(@PathVariable String userId){
         return userService.findById(userId);
     }
 
     @PatchMapping("/{userId}/tier")
-    public User updateTier(@PathVariable UUID userId, @Valid @RequestBody UpdateTierRequest request){
+    public User updateTier(@PathVariable String userId, @Valid @RequestBody UpdateTierRequest request){
         return userService.updateTier(userId, request.getTier());
     }
 }
