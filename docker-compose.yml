@@ -1,24 +1,4 @@
 services:
-  postgres:
-    image: postgres:16
-    container_name: scoot-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: scoot
-      POSTGRES_PASSWORD: scoot
-      POSTGRES_DB: scoot
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      # Runs only on a fresh volume. See docker/init-db/01-create-databases.sql
-      - ./docker/init-db:/docker-entrypoint-initdb.d
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U scoot -d scoot"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   rabbitmq:
     image: rabbitmq:3-management
     container_name: scoot-rabbitmq
@@ -27,8 +7,8 @@ services:
       RABBITMQ_DEFAULT_USER: scoot
       RABBITMQ_DEFAULT_PASS: scoot
     ports:
-      - "5672:5672"   # AMQP - services connect here
-      - "15672:15672" # Management UI - http://localhost:15672 (scoot/scoot)
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     healthcheck:
@@ -37,6 +17,38 @@ services:
       timeout: 10s
       retries: 5
 
+  user-service:
+    build: ./user-service
+    env_file: .env
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    ports:
+      - "8081:8081"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  booking-service:
+    build: ./booking-service
+    env_file: .env
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    ports:
+      - "8080:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  notification-service:
+    build: ./notification-service
+    env_file: .env
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    ports:
+      - "8082:8082"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
 volumes:
-  postgres_data:
   rabbitmq_data:
