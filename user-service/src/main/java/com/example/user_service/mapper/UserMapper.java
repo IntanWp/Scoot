@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     @Insert("""
-        INSERT INTO users (user_id, name, email, tier, password_hash)
-        VALUES (#{userId}::uuid, #{name}, #{email}, #{tier}, #{password})
+        INSERT INTO users (user_id, name, email, tier)
+        VALUES (#{userId}::uuid, #{name}, #{email}, #{tier})
         """)
     void insert(User user);
 

@@ -23,7 +23,5 @@ public class User {
 
     private OffsetDateTime createdAt;
 
-    private String password;
-
 
 }
