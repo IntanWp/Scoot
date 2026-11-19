@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 public class UpdateTierRequest {
     @Min(1)
-    @Max(3)
+    @Max(2)
     @NotNull
     private Integer tier;
 }
