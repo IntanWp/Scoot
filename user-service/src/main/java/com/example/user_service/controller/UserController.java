@@ -33,13 +33,13 @@ public class UserController {
         return userService.createUser(request);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/me")
     public User getUserById(@RequestHeader("X-User-Id") String userId){
 
         return userService.findById(userId);
     }
 
-    @PatchMapping("/{userId}/tier")
+    @PatchMapping("/tier")
     public User updateTier(@RequestHeader("X-User-Id") String userId, @Valid @RequestBody UpdateTierRequest request){
         return userService.updateTier(userId, request.getTier());
     }
