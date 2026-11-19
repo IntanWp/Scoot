@@ -1,24 +1,12 @@
 package com.example.user_service.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.user_service.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
-public interface UserMapper {
-    @Insert("""
-        INSERT INTO users (user_id, name, email, tier)
-        VALUES (#{userId}::uuid, #{name}, #{email}, #{tier})
-        """)
-    void insert(User user);
+public interface UserMapper extends BaseMapper<User> {
 
-    @Select("SELECT * FROM users WHERE user_id = #{userId}::uuid")
-    User findById(String userId);
-
-    @Select("SELECT * FROM users ORDER BY created_at")
-    List<User> findAll();
-
-    @Update("UPDATE users SET tier = #{tier} WHERE user_id = #{userId}::uuid")
-    int updateTier(@Param("userId") String userId, @Param("tier") Integer tier);
 }

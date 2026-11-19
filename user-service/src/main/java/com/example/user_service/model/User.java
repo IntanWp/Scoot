@@ -1,5 +1,6 @@
 package com.example.user_service.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@TableName("users")
 public class User {
     private String userId;
 
