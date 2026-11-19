@@ -19,7 +19,7 @@ public class CreateUserRequest {
     private String email;
 
     @Min(1)
-    @Max(3)
+    @Max(2)
     @NotNull
     private Integer tier;
 }
