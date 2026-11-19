@@ -1,5 +1,8 @@
 package com.example.user_service.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,7 @@ import java.time.OffsetDateTime;
 @Builder
 @TableName("users")
 public class User {
+    @TableId(value = "user_id", type = IdType.ASSIGN_UUID)
     private String userId;
 
     private String name;
@@ -23,6 +27,7 @@ public class User {
 
     private Integer tier;
 
+    @TableField("created_at")
     private OffsetDateTime createdAt;
 
 

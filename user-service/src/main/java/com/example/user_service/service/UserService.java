@@ -30,7 +30,6 @@ public class UserService {
                 .email(request.getEmail().trim().toLowerCase())
                 .tier(request.getTier())
                 .name(request.getName())
-                .userId(UUID.randomUUID().toString())
                 .build();
 
         try {
