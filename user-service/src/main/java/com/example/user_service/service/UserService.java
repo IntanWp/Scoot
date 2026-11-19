@@ -21,7 +21,8 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<User> getAllUsers(){
-        return userMapper.findAll();
+
+        return userMapper.selectList(null); //no WHERE condition, so selects all
     }
 
     public User createUser(CreateUserRequest request){
@@ -30,7 +31,6 @@ public class UserService {
                 .tier(request.getTier())
                 .name(request.getName())
                 .userId(UUID.randomUUID().toString())
-                .password(request.getPassword())
                 .build();
 
         try {
@@ -38,25 +38,30 @@ public class UserService {
         } catch (DuplicateKeyException e) {
             throw new UserException(ErrorCodeEnum.EMAIL_ALREADY_EXISTS);
         }
-        return userMapper.findById(newUser.getUserId());
+        return userMapper.selectById(newUser.getUserId());
 
     }
 
     public User findById(String id){
 
-        User user = userMapper.findById(id);
-        if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
+        };
         return user;
 
     }
 
     public User updateTier(String id, Integer newTier){
 
-        User user = userMapper.findById(id);
-        if (user == null) throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            throw new UserException(ErrorCodeEnum.USER_NOT_FOUND);
+        };
 
-        userMapper.updateTier(id, newTier);
+        user.setTier(newTier);
+        userMapper.updateById(user);
 
-        return userMapper.findById(id);
+        return userMapper.selectById(id);
     }
 }
